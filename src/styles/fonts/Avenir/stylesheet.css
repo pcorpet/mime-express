@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'Avenir Next LT Pro';
+	src: url('AvenirNextLTPro-HeavyCn.eot');
+	src: url('AvenirNextLTPro-HeavyCn.eot?#iefix') format('embedded-opentype'),
+		url('AvenirNextLTPro-HeavyCn.woff2') format('woff2'),
+		url('AvenirNextLTPro-HeavyCn.woff') format('woff'),
+		url('AvenirNextLTPro-HeavyCn.ttf') format('truetype'),
+		url('AvenirNextLTPro-HeavyCn.svg#AvenirNextLTPro-HeavyCn') format('svg');
+	font-weight: 900;
+	font-style: normal;
+}

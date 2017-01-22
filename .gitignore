@@ -1,0 +1,9 @@
+# Distribution / packaging
+/dist/
+
+# Sublime Text project files
+*.sublime-project
+*.sublime-workspace
+
+# Vim backup files.
+.*.swp
