@@ -16,7 +16,7 @@ var config = _.merge({
   output: {
     filename: 'app.[hash].js',
     path: path.join(__dirname, '/../dist/assets'),
-    publicPath: '/assets/',
+    publicPath: 'assets/',
   },
   plugins: [
     // fetch polyfill
