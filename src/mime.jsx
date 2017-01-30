@@ -7,6 +7,7 @@ const allExpressions = require('./expressions.json')
 class MimePage extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
+    transitionDurationMillisec: React.PropTypes.number.isRequired,
   }
 
   static defaultProps = {
@@ -14,10 +15,12 @@ class MimePage extends React.Component {
       backgroundColor: '#1e5089',
       color: '#fff',
     },
+    transitionDurationMillisec: 300,
   }
 
   state = {
     expression: '',
+    isFadingOut: false,
   }
 
   componentWillMount() {
@@ -25,13 +28,19 @@ class MimePage extends React.Component {
   }
 
   nextExpression = () => {
-    this.setState({
-      expression: allExpressions[Math.floor(Math.random() * allExpressions.length)],
-    })
+    const {transitionDurationMillisec} = this.props
+    clearTimeout(this.timeout)
+    const nextExpression = allExpressions[Math.floor(Math.random() * allExpressions.length)]
+    this.setState({isFadingOut: true})
+    this.timeout = setTimeout(() => this.setState({
+      expression: nextExpression,
+      isFadingOut: false,
+    }), transitionDurationMillisec / 2)
   }
 
   render() {
-    const {expression} = this.state
+    const {transitionDurationMillisec} = this.props
+    const {expression, isFadingOut} = this.state
     const style = {
       alignItems: 'center',
       boxSizing: 'border-box',
@@ -57,15 +66,20 @@ class MimePage extends React.Component {
       cursor: 'pointer',
       fontFamily: 'Avenir Next LT Pro',
       fontSize: 16,
-      marginTop: 50,
       opacity: .5,
       padding: '13px 30px 10px',
     }
-    return <div style={style}>
+    const expressionStyle = {
+      opacity: isFadingOut ? 0 : 1,
+      transition: (transitionDurationMillisec / 2) + 'ms',
+    }
+    return <div style={style} onClick={this.nextExpression}>
       <header style={headerStyle}>
         Mimez l’expression&nbsp;:
       </header>
-      {expression}
+      <div style={expressionStyle}>
+        {expression}
+      </div>
       <button onClick={this.nextExpression} style={buttonStyle}>
         Suivant
       </button>
