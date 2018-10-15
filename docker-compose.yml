@@ -2,7 +2,7 @@ version: "2"
 services:
   frontend:
     # TODO(pascal): Replace by vanilla one.
-    image: docker.bayesimpact.org/bob-emploi/dev-webpack
+    image: bayesimpact/bob-emploi-dev
     entrypoint: ""
     command: npm start
     ports:
@@ -20,3 +20,7 @@ services:
       # For releasing.
       - ./dist:/usr/app/dist:rw
     tty: true
+  import:
+    build: import
+    volumes:
+      - ./import/ttl_to_json.js:/work/ttl_to_json.js:ro
