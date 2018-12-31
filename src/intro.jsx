@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 require('styles/fonts/Avenir/stylesheet.css')
 
 
 class IntroPage extends React.Component {
   static propTypes = {
-    onSubmit: React.PropTypes.func.isRequired,
-    style: React.PropTypes.object,
+    onSubmit: PropTypes.func.isRequired,
+    style: PropTypes.object,
   }
 
   static defaultProps = {

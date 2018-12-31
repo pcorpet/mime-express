@@ -1,19 +1,13 @@
 version: "2"
 services:
   frontend:
-    # TODO(pascal): Replace by vanilla one.
-    image: bayesimpact/bob-emploi-dev
+    image: bayesimpact/react-base
     entrypoint: ""
     command: npm start
     ports:
       - 3002:80
     volumes:
-      - ./cfg:/usr/app/cfg:ro
       - ./src:/usr/app/src:ro
-      - ./.babelrc:/usr/app/.babelrc:ro
-      - ./package.json:/usr/app/package.json:ro
-      - ./server.js:/usr/app/server.js:ro
-      - ./webpack.config.js:/usr/app/webpack.config.js:ro
       # For linting.
       - ./.eslintrc.json:/usr/app/.eslintrc.json:ro
       - ./.eslintignore:/usr/app/.eslintignore:ro

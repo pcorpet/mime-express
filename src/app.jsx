@@ -1,8 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 import {IntroPage} from './intro'
 import {MimePage} from './mime'
+
+import 'styles/app.css'
 
 
 class App extends React.Component {
@@ -20,8 +21,4 @@ class App extends React.Component {
 }
 
 
-// Render the main component into the dom.
-// The Provider puts the store on a `Context`, so we can connect other components to it.
-ReactDOM.render(
-  <App />,
-  document.getElementById('app'))
+export {App}

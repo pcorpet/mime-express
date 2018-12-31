@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 
@@ -6,8 +7,8 @@ const allExpressions = require('./expressions.json')
 
 class MimePage extends React.Component {
   static propTypes = {
-    style: React.PropTypes.object,
-    transitionDurationMillisec: React.PropTypes.number.isRequired,
+    style: PropTypes.object,
+    transitionDurationMillisec: PropTypes.number.isRequired,
   }
 
   static defaultProps = {
@@ -23,7 +24,7 @@ class MimePage extends React.Component {
     isFadingOut: false,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.nextExpression()
   }
 
