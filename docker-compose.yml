@@ -1,18 +1,22 @@
 version: "2"
 services:
   frontend:
-    image: bayesimpact/react-base
+    build: .
     entrypoint: ""
     command: npm start
     ports:
       - 3002:80
     volumes:
       - ./src:/usr/app/src:ro
+      - ./cfg/base.js:/usr/app/cfg/base.js:ro
       # For linting.
       - ./.eslintrc.json:/usr/app/.eslintrc.json:ro
       - ./.eslintignore:/usr/app/.eslintignore:ro
       # For releasing.
       - ./dist:/usr/app/dist:rw
+      - ./firebase.json:/usr/app/firebase.json:rw
+      - ./database.rules.json:/usr/app/database.rules.json:ro
+      - ./.firebaserc:/usr/app/.firebaserc.json:rw
     tty: true
   import:
     build: import

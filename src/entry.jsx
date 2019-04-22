@@ -27,6 +27,13 @@ function init() {
 
   Array.from(document.getElementsByTagName('title')).
     forEach(titleElement => titleElement.innerText = 'Mime-Express')
-}
 
+  if ('serviceWorker' in navigator) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener('load', () => {
+      const assetPath = process.env.NODE_ENV === 'production' ? '/assets/' : '/'
+      navigator.serviceWorker.register(`${assetPath}service-worker.js`)
+    })
+  }
+}
 init()
