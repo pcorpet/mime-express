@@ -31,8 +31,7 @@ function init() {
   if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
     window.addEventListener('load', () => {
-      const assetPath = process.env.NODE_ENV === 'production' ? '/assets/' : '/'
-      navigator.serviceWorker.register(`${assetPath}service-worker.js`)
+      navigator.serviceWorker.register('service-worker.js')
     })
   }
 }
