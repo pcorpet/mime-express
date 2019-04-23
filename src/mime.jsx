@@ -1,13 +1,18 @@
+import SettingsIcon from 'mdi-react/SettingsIcon'
 import PropTypes from 'prop-types'
 import React from 'react'
+import {connect} from 'react-redux'
+
+import {showSettings} from './store'
 
 
-class MimePage extends React.Component {
+class MimePageBase extends React.Component {
   static propTypes = {
     allExpressions: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       vulgaire: PropTypes.bool,
     })).isRequired,
+    dispatch: PropTypes.func.isRequired,
     style: PropTypes.object,
     transitionDurationMillisec: PropTypes.number.isRequired,
   }
@@ -29,6 +34,10 @@ class MimePage extends React.Component {
     this.nextExpression()
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout)
+  }
+
   nextExpression = () => {
     const {allExpressions, transitionDurationMillisec} = this.props
     clearTimeout(this.timeout)
@@ -38,6 +47,10 @@ class MimePage extends React.Component {
       expression: nextExpression.title,
       isFadingOut: false,
     }), transitionDurationMillisec / 2)
+  }
+
+  openSettings = () => {
+    this.props.dispatch(showSettings)
   }
 
   render() {
@@ -75,7 +88,17 @@ class MimePage extends React.Component {
       opacity: isFadingOut ? 0 : 1,
       transition: (transitionDurationMillisec / 2) + 'ms',
     }
+    const settingsStyle = {
+      cursor: 'pointer',
+      padding: 20,
+      position: 'absolute',
+      right: 10,
+      top: 10,
+    }
     return <div style={style} onClick={this.nextExpression}>
+      <SettingsIcon
+        style={settingsStyle}
+        onClick={this.openSettings} />
       <header style={headerStyle}>
         Mimez l’expression&nbsp;:
       </header>
@@ -88,6 +111,7 @@ class MimePage extends React.Component {
     </div>
   }
 }
+const MimePage = connect()(MimePageBase)
 
 
 export {MimePage}
