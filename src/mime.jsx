@@ -2,11 +2,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 
-const allExpressions = require('./expressions.json')
-
-
 class MimePage extends React.Component {
   static propTypes = {
+    allExpressions: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      vulgaire: PropTypes.bool,
+    })).isRequired,
     style: PropTypes.object,
     transitionDurationMillisec: PropTypes.number.isRequired,
   }
@@ -29,12 +30,12 @@ class MimePage extends React.Component {
   }
 
   nextExpression = () => {
-    const {transitionDurationMillisec} = this.props
+    const {allExpressions, transitionDurationMillisec} = this.props
     clearTimeout(this.timeout)
     const nextExpression = allExpressions[Math.floor(Math.random() * allExpressions.length)]
     this.setState({isFadingOut: true})
     this.timeout = setTimeout(() => this.setState({
-      expression: nextExpression,
+      expression: nextExpression.title,
       isFadingOut: false,
     }), transitionDurationMillisec / 2)
   }

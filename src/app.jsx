@@ -6,6 +6,9 @@ import {MimePage} from './mime'
 import 'styles/app.css'
 
 
+const allExpressions = require('./expressions.json')
+
+
 class App extends React.Component {
   state = {
     isIntroSeen: false,
@@ -16,7 +19,7 @@ class App extends React.Component {
     if (!isIntroSeen) {
       return <IntroPage onSubmit={() => this.setState({isIntroSeen: true})} />
     }
-    return <MimePage />
+    return <MimePage allExpressions={allExpressions} />
   }
 }
 
