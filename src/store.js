@@ -1,8 +1,9 @@
+import Storage from 'local-storage-fallback'
 
 
 const initialState = {
   areSettingsShown: false,
-  settings: {},
+  settings: JSON.parse(Storage.getItem('SETTINGS') || '{}'),
 }
 
 
@@ -14,7 +15,12 @@ function reducer(state = initialState, action) {
     return {...state, areSettingsShown: false}
   }
   if (action.type === 'UPDATE_SETTINGS') {
-    return {...state, settings: {...state.settings, ...action.settings}}
+    const settings = {
+      ...state.settings,
+      ...action.settings,
+    }
+    Storage.setItem('SETTINGS', JSON.stringify(settings))
+    return {...state, settings}
   }
   return state
 }
