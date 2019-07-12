@@ -13,19 +13,19 @@ availableLanguages.sort((a, b) => datasets[a].name - datasets[b].name)
 
 const difficultyOptions = [
   {
-    name: 'expressions très communes',
+    name: 'very common expressions',
     value: 9,
   },
   {
-    name: 'expressions communes',
+    name: 'common expressions',
     value: 6,
   },
   {
-    name: 'communes et un peu moins',
+    name: 'common and less common',
     value: 4,
   },
   {
-    name: 'toutes les expressions',
+    name: 'all expressions',
     value: 1,
   },
 ]
@@ -83,14 +83,14 @@ class SettingsPageBase extends React.Component {
     return <div style={style}>
       <CloseIcon onClick={this.close} style={closeStyle} />
       <div style={{marginBottom: 30}}>
-        {translate('Langue\u00A0:')}{' '}
+        {translate('Language:')}{' '}
         <select value={lang} onChange={this.handleChangeLang}>
           {availableLanguages.map(lang =>
             <option key={lang} value={lang}>{datasets[lang].name}</option>)}
         </select>
       </div>
       {datasets[lang].hasLevels ? <div style={{marginBottom: 30}}>
-        {translate('Difficulté\u00A0:')}{' '}
+        {translate('Difficulty:')}{' '}
         <select value={(minLevelAccepted || 1) + ''} onChange={this.handleChangeLevel}>
           {difficultyOptions.map(({name, value}) =>
             <option key={value} value={value}>{translate(name)}</option>
@@ -101,7 +101,7 @@ class SettingsPageBase extends React.Component {
       {datasets[lang].hasVulgaireFlags ?
         <div onClick={this.handleChangeVulgar} style={{cursor: 'pointer'}}>
           <input type="checkbox" checked={!isVulgarAccepted} onChange={this.handleChangeVulgar} />
-          {translate('éviter les expressions osées')}
+          {translate('avoid crude expressions')}
         </div> : null}
     </div>
   }

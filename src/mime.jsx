@@ -101,13 +101,13 @@ class MimePageBase extends React.Component {
         style={settingsStyle}
         onClick={this.openSettings} />
       <header style={headerStyle}>
-        {translate('Mimez l’expression\u00A0:')}
+        {translate('Mime the expression:')}
       </header>
       <div style={expressionStyle}>
         {expression}
       </div>
       <button onClick={this.nextExpression} style={buttonStyle}>
-        {translate('Suivant')}
+        {translate('Next')}
       </button>
     </div>
   }

@@ -48,15 +48,15 @@ class IntroPage extends React.Component {
     }
     return <div style={style}>
       <header style={headerStyle}>
-        {translate('Règles du jeu\u00A0:')}
+        {translate('Rules of the game:')}
       </header>
       <div style={{maxWidth: 440}}>
         {translate('rules')}
         <br /><br />
-        {translate('Fous rires garantis\u00A0!!')}
+        {translate('Laughters guaranteed!!')}
       </div>
       <button onClick={onSubmit} style={buttonStyle}>
-        {translate('Commencer')}
+        {translate('Start')}
       </button>
     </div>
   }
