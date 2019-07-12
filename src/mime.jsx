@@ -15,6 +15,7 @@ class MimePageBase extends React.Component {
     dispatch: PropTypes.func.isRequired,
     style: PropTypes.object,
     transitionDurationMillisec: PropTypes.number.isRequired,
+    translate: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -54,7 +55,7 @@ class MimePageBase extends React.Component {
   }
 
   render() {
-    const {transitionDurationMillisec} = this.props
+    const {transitionDurationMillisec, translate} = this.props
     const {expression, isFadingOut} = this.state
     const style = {
       alignItems: 'center',
@@ -100,13 +101,13 @@ class MimePageBase extends React.Component {
         style={settingsStyle}
         onClick={this.openSettings} />
       <header style={headerStyle}>
-        Mimez l’expression&nbsp;:
+        {translate('Mimez l’expression\u00A0:')}
       </header>
       <div style={expressionStyle}>
         {expression}
       </div>
       <button onClick={this.nextExpression} style={buttonStyle}>
-        Suivant
+        {translate('Suivant')}
       </button>
     </div>
   }

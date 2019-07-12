@@ -39,6 +39,7 @@ class SettingsPageBase extends React.Component {
       lang: PropTypes.string,
       minLevelAccepted: PropTypes.number,
     }).isRequired,
+    translate: PropTypes.func.isRequired,
   }
 
   close = () => this.props.dispatch(hideSettings)
@@ -60,7 +61,7 @@ class SettingsPageBase extends React.Component {
   }
 
   render() {
-    const {isVulgarAccepted, lang, minLevelAccepted} = this.props.settings
+    const {settings: {isVulgarAccepted, lang, minLevelAccepted}, translate} = this.props
     const style = {
       alignItems: 'center',
       boxSizing: 'border-box',
@@ -82,17 +83,17 @@ class SettingsPageBase extends React.Component {
     return <div style={style}>
       <CloseIcon onClick={this.close} style={closeStyle} />
       <div style={{marginBottom: 30}}>
-        Langue&nbsp;:{' '}
+        {translate('Langue\u00A0:')}{' '}
         <select value={lang} onChange={this.handleChangeLang}>
           {availableLanguages.map(lang =>
             <option key={lang} value={lang}>{datasets[lang].name}</option>)}
         </select>
       </div>
       {datasets[lang].hasLevels ? <div style={{marginBottom: 30}}>
-        Difficulté&nbsp;:{' '}
+        {translate('Difficulté\u00A0:')}{' '}
         <select value={(minLevelAccepted || 1) + ''} onChange={this.handleChangeLevel}>
           {difficultyOptions.map(({name, value}) =>
-            <option key={value} value={value}>{name}</option>
+            <option key={value} value={value}>{translate(name)}</option>
           )}
         </select>
       </div> : null}
@@ -100,12 +101,12 @@ class SettingsPageBase extends React.Component {
       {datasets[lang].hasVulgaireFlags ?
         <div onClick={this.handleChangeVulgar} style={{cursor: 'pointer'}}>
           <input type="checkbox" checked={!isVulgarAccepted} onChange={this.handleChangeVulgar} />
-          éviter les expressions osées
+          {translate('éviter les expressions osées')}
         </div> : null}
     </div>
   }
 }
-const SettingsPage = connect(({settings}) => ({settings}))(SettingsPageBase)
+const SettingsPage = connect(({settings, translate}) => ({settings, translate}))(SettingsPageBase)
 
 
 export {SettingsPage}

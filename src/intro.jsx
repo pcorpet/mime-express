@@ -7,6 +7,7 @@ class IntroPage extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     style: PropTypes.object,
+    translate: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -17,7 +18,7 @@ class IntroPage extends React.Component {
   }
 
   render() {
-    const {onSubmit} = this.props
+    const {onSubmit, translate} = this.props
     const style = {
       alignItems: 'center',
       display: 'flex',
@@ -47,16 +48,15 @@ class IntroPage extends React.Component {
     }
     return <div style={style}>
       <header style={headerStyle}>
-        Règles du jeu&nbsp;:
+        {translate('Règles du jeu\u00A0:')}
       </header>
       <div style={{maxWidth: 440}}>
-        Vous devez mimer l'expression qui s’affiche à l'écran. Lorsqu'un joueur
-        découvre l'expression, il devra à son tour mimer une nouvelle expression.
+        {translate('rules')}
         <br /><br />
-        Fous rires garantis&nbsp;!!
+        {translate('Fous rires garantis\u00A0!!')}
       </div>
       <button onClick={onSubmit} style={buttonStyle}>
-        Commencer
+        {translate('Commencer')}
       </button>
     </div>
   }

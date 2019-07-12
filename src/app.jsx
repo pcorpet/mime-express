@@ -20,6 +20,7 @@ class MainPageBase extends React.Component {
       lang: PropTypes.string,
       minLevelAccepted: PropTypes.number,
     }).isRequired,
+    translate: PropTypes.func.isRequired,
   }
 
   state = {
@@ -27,19 +28,21 @@ class MainPageBase extends React.Component {
   }
 
   render() {
-    const {areSettingsShown, settings} = this.props
+    const {areSettingsShown, settings, translate} = this.props
     const {isIntroSeen} = this.state
     if (areSettingsShown) {
       return <SettingsPage />
     }
     if (!isIntroSeen) {
-      return <IntroPage onSubmit={() => this.setState({isIntroSeen: true})} />
+      return <IntroPage
+        onSubmit={() => this.setState({isIntroSeen: true})}
+        translate={translate} />
     }
-    return <MimePage allExpressions={getExpressions(settings)} />
+    return <MimePage allExpressions={getExpressions(settings)} translate={translate} />
   }
 }
-const MainPage = connect(({areSettingsShown, settings}) =>
-  ({areSettingsShown, settings}))(MainPageBase)
+const MainPage = connect(({areSettingsShown, settings, translate}) =>
+  ({areSettingsShown, settings, translate}))(MainPageBase)
 
 
 class App extends React.Component {
