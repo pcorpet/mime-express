@@ -26,6 +26,9 @@ const locales = {
 }
 
 const getTranslator = _memoize(lang => {
+  if (lang === 'fr') {
+    return text => locales.fr[text] || text
+  }
   if (locales[lang]) {
     return text => locales[lang][text] || locales.en[text] || text
   }
@@ -33,7 +36,23 @@ const getTranslator = _memoize(lang => {
 })
 
 
-const initialSettings = {lang: 'fr', ...JSON.parse(Storage.getItem('SETTINGS') || '{}')}
+function getNavigatorLanguage() {
+  const lang = navigator.language || navigator.userLanguage
+  if (locales[lang]) {
+    return lang
+  }
+  const langCode = lang.substr(0, 2)
+  if (locales[langCode]) {
+    return langCode
+  }
+  return 'en'
+}
+
+
+const initialSettings = {
+  lang: getNavigatorLanguage(),
+  ...JSON.parse(Storage.getItem('SETTINGS') || '{}'),
+}
 
 
 const initialState = {
