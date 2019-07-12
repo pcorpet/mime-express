@@ -16,6 +16,7 @@ class MainPageBase extends React.Component {
   static propTypes = {
     areSettingsShown: PropTypes.bool.isRequired,
     settings: PropTypes.shape({
+      areDefinitionsShown: PropTypes.bool,
       isVulgarAcepted: PropTypes.bool,
       lang: PropTypes.string,
       minLevelAccepted: PropTypes.number,
@@ -38,7 +39,9 @@ class MainPageBase extends React.Component {
         onSubmit={() => this.setState({isIntroSeen: true})}
         translate={translate} />
     }
-    return <MimePage allExpressions={getExpressions(settings)} translate={translate} />
+    return <MimePage
+      allExpressions={getExpressions(settings)} translate={translate}
+      areDefinitionsShown={!!settings.areDefinitionsShown} />
   }
 }
 const MainPage = connect(({areSettingsShown, settings, translate}) =>

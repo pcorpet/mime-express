@@ -6,12 +6,16 @@ import {connect} from 'react-redux'
 import {showSettings} from './store'
 
 
+const stopPropagation = event => event.stopPropagation()
+
+
 class MimePageBase extends React.Component {
   static propTypes = {
     allExpressions: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       vulgaire: PropTypes.bool,
     })).isRequired,
+    areDefinitionsShown: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired,
     style: PropTypes.object,
     transitionDurationMillisec: PropTypes.number.isRequired,
@@ -27,7 +31,7 @@ class MimePageBase extends React.Component {
   }
 
   state = {
-    expression: '',
+    expression: {},
     isFadingOut: false,
   }
 
@@ -45,7 +49,7 @@ class MimePageBase extends React.Component {
     const nextExpression = allExpressions[Math.floor(Math.random() * allExpressions.length)]
     this.setState({isFadingOut: true})
     this.timeout = setTimeout(() => this.setState({
-      expression: nextExpression.title,
+      expression: nextExpression,
       isFadingOut: false,
     }), transitionDurationMillisec / 2)
   }
@@ -55,7 +59,7 @@ class MimePageBase extends React.Component {
   }
 
   render() {
-    const {transitionDurationMillisec, translate} = this.props
+    const {areDefinitionsShown, transitionDurationMillisec, translate} = this.props
     const {expression, isFadingOut} = this.state
     const style = {
       alignItems: 'center',
@@ -86,8 +90,19 @@ class MimePageBase extends React.Component {
       padding: '13px 30px 10px',
     }
     const expressionStyle = {
+      fontWeight: areDefinitionsShown ? 'bold' : 'inherit',
       opacity: isFadingOut ? 0 : 1,
       transition: (transitionDurationMillisec / 2) + 'ms',
+    }
+    const descriptionStyle = {
+      fontSize: '60%',
+      fontWeight: 'normal',
+      marginTop: 20,
+      opacity: .7,
+    }
+    const linkStyle = {
+      color: 'inherit',
+      textDecoration: 'none',
     }
     const settingsStyle = {
       cursor: 'pointer',
@@ -104,7 +119,15 @@ class MimePageBase extends React.Component {
         {translate('Mime the expression:')}
       </header>
       <div style={expressionStyle}>
-        {expression}
+        {expression.title || null}
+        {areDefinitionsShown ? <div style={descriptionStyle}>
+          {expression.definition ? expression.definition : <a
+            href={`https://www.google.com/search?q=${encodeURIComponent(expression.title)}`}
+            target="_blank" rel="noopener noreferrer" style={linkStyle}
+            onClick={stopPropagation}>
+            {translate('search definition →')}
+          </a>}
+        </div> : null}
       </div>
       <button onClick={this.nextExpression} style={buttonStyle}>
         {translate('Next')}

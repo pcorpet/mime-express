@@ -21,6 +21,8 @@ const locales = {
     'common expressions': 'expressions communes',
     'rules': "Vous devez mimer l'expression qui s’affiche à l'écran. Lorsqu'un joueur " +
       "découvre l'expression, il devra à son tour mimer une nouvelle expression.",
+    'search definition →': 'chercher la définition →',
+    'show the definitions': 'montrer les définitions',
     'very common expressions': 'expressions très communes',
   },
 }

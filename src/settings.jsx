@@ -35,6 +35,7 @@ class SettingsPageBase extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     settings: PropTypes.shape({
+      areDefinitionsShown: PropTypes.bool,
       isVulgarAccepted: PropTypes.bool,
       lang: PropTypes.string,
       minLevelAccepted: PropTypes.number,
@@ -60,8 +61,14 @@ class SettingsPageBase extends React.Component {
     dispatch(updateSettings({isVulgarAccepted: !settings.isVulgarAccepted}))
   }
 
+  handleChangeDefinition = () => {
+    const {dispatch, settings} = this.props
+    dispatch(updateSettings({areDefinitionsShown: !settings.areDefinitionsShown}))
+  }
+
   render() {
-    const {settings: {isVulgarAccepted, lang, minLevelAccepted}, translate} = this.props
+    const {settings: {areDefinitionsShown, isVulgarAccepted, lang, minLevelAccepted},
+      translate} = this.props
     const style = {
       alignItems: 'center',
       boxSizing: 'border-box',
@@ -89,6 +96,13 @@ class SettingsPageBase extends React.Component {
             <option key={lang} value={lang}>{datasets[lang].name}</option>)}
         </select>
       </div>
+
+      <div onClick={this.handleChangeDefinition} style={{cursor: 'pointer', marginBottom: 30}}>
+        <input
+          type="checkbox" checked={areDefinitionsShown} onChange={this.handleChangeDefinition} />
+        {translate('show the definitions')}
+      </div>
+
       {datasets[lang].hasLevels ? <div style={{marginBottom: 30}}>
         {translate('Difficulty:')}{' '}
         <select value={(minLevelAccepted || 1) + ''} onChange={this.handleChangeLevel}>
