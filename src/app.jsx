@@ -1,9 +1,9 @@
-import _memoize from 'lodash/memoize'
 import PropTypes from 'prop-types'
 import React from 'react'
 import {connect, Provider} from 'react-redux'
 import {createStore} from 'redux'
 
+import {getExpressions} from './data'
 import {IntroPage} from './intro'
 import {MimePage} from './mime'
 import {SettingsPage} from './settings'
@@ -12,27 +12,12 @@ import {reducer} from './store'
 import 'styles/app.css'
 
 
-const allExpressions = require('./expressions.json')
-
-
-const filterExpressions = _memoize(
-  ({isVulgarAcepted, minLevelAccepted}) => allExpressions.filter(expression => {
-    if (minLevelAccepted && expression.score < minLevelAccepted) {
-      return false
-    }
-    if (!isVulgarAcepted && expression.vulgaire) {
-      return false
-    }
-    return true
-  }),
-  ({isVulgarAcepted, minLevelAccepted}) => `${minLevelAccepted || 0}-${isVulgarAcepted || false}`)
-
-
 class MainPageBase extends React.Component {
   static propTypes = {
     areSettingsShown: PropTypes.bool.isRequired,
     settings: PropTypes.shape({
       isVulgarAcepted: PropTypes.bool,
+      lang: PropTypes.string,
       minLevelAccepted: PropTypes.number,
     }).isRequired,
   }
@@ -50,7 +35,7 @@ class MainPageBase extends React.Component {
     if (!isIntroSeen) {
       return <IntroPage onSubmit={() => this.setState({isIntroSeen: true})} />
     }
-    return <MimePage allExpressions={filterExpressions(settings)} />
+    return <MimePage allExpressions={getExpressions(settings)} />
   }
 }
 const MainPage = connect(({areSettingsShown, settings}) =>

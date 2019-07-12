@@ -3,7 +3,7 @@ import Storage from 'local-storage-fallback'
 
 const initialState = {
   areSettingsShown: false,
-  settings: JSON.parse(Storage.getItem('SETTINGS') || '{}'),
+  settings: {lang: 'fr', ...JSON.parse(Storage.getItem('SETTINGS') || '{}')},
 }
 
 

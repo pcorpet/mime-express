@@ -3,8 +3,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {connect} from 'react-redux'
 
+import {datasets} from './data'
 import {hideSettings, updateSettings} from './store'
 
+
+const availableLanguages = Object.keys(datasets)
+availableLanguages.sort((a, b) => datasets[a].name - datasets[b].name)
 
 
 const difficultyOptions = [
@@ -32,11 +36,17 @@ class SettingsPageBase extends React.Component {
     dispatch: PropTypes.func.isRequired,
     settings: PropTypes.shape({
       isVulgarAccepted: PropTypes.bool,
+      lang: PropTypes.string,
       minLevelAccepted: PropTypes.number,
     }).isRequired,
   }
 
   close = () => this.props.dispatch(hideSettings)
+
+  handleChangeLang = event => {
+    const {dispatch} = this.props
+    dispatch(updateSettings({lang: event.target.value}))
+  }
 
   handleChangeLevel = event => {
     const {dispatch} = this.props
@@ -50,7 +60,7 @@ class SettingsPageBase extends React.Component {
   }
 
   render() {
-    const {isVulgarAccepted, minLevelAccepted} = this.props.settings
+    const {isVulgarAccepted, lang, minLevelAccepted} = this.props.settings
     const style = {
       alignItems: 'center',
       boxSizing: 'border-box',
@@ -64,26 +74,34 @@ class SettingsPageBase extends React.Component {
     }
     const closeStyle = {
       cursor: 'pointer',
-      position: 'absolute',
       padding: 20,
+      position: 'absolute',
       right: 10,
       top: 10,
     }
     return <div style={style}>
       <CloseIcon onClick={this.close} style={closeStyle} />
       <div style={{marginBottom: 30}}>
+        Langue&nbsp;:{' '}
+        <select value={lang} onChange={this.handleChangeLang}>
+          {availableLanguages.map(lang =>
+            <option key={lang} value={lang}>{datasets[lang].name}</option>)}
+        </select>
+      </div>
+      {datasets[lang].hasLevels ? <div style={{marginBottom: 30}}>
         Difficulté&nbsp;:{' '}
         <select value={(minLevelAccepted || 1) + ''} onChange={this.handleChangeLevel}>
           {difficultyOptions.map(({name, value}) =>
             <option key={value} value={value}>{name}</option>
           )}
         </select>
-      </div>
+      </div> : null}
 
-      <div onClick={this.handleChangeVulgar} style={{cursor: 'pointer'}}>
-        <input type="checkbox" checked={!isVulgarAccepted} onChange={this.handleChangeVulgar} />
-        éviter les expressions osées
-      </div>
+      {datasets[lang].hasVulgaireFlags ?
+        <div onClick={this.handleChangeVulgar} style={{cursor: 'pointer'}}>
+          <input type="checkbox" checked={!isVulgarAccepted} onChange={this.handleChangeVulgar} />
+          éviter les expressions osées
+        </div> : null}
     </div>
   }
 }
