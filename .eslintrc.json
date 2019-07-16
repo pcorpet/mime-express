@@ -4,13 +4,16 @@
     "plugin:import/recommended",
     "plugin:react/recommended"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "plugins": [
     "import",
     "react"
   ],
   "settings": {
-    "import/resolver": "webpack"
+    "import/resolver": {
+      "typescript": {},
+      "webpack": {}
+    }
   },
   "ecmaFeatures": {
     "jsx": true,
