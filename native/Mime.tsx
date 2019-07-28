@@ -1,6 +1,7 @@
 import React from 'react'
 import {BackHandler, Linking, StyleSheet, Text, View} from 'react-native'
 import Button from './Button'
+import {Settings} from './Store'
 
 
 const styles = StyleSheet.create({
@@ -51,6 +52,7 @@ interface Expression {
 interface MimeScreenProps {
   allExpressions: readonly Expression[]
   onBack?: () => boolean
+  settings: Settings
   translate: (text: string) => string
   transitionDurationMillisec: number
 }
@@ -105,9 +107,9 @@ export default class MimeScreen extends React.PureComponent<MimeScreenProps> {
   }
 
   public render(): React.ReactNode {
-    const {transitionDurationMillisec, translate} = this.props
+    const {settings, transitionDurationMillisec, translate} = this.props
     const {expression, isFadingOut} = this.state
-    const areDefinitionsShown = true
+    const areDefinitionsShown = settings.areDefinitionsShown
     const fadingStyle = {
       opacity: isFadingOut ? 0 : 1,
       transition: (transitionDurationMillisec / 2) + 'ms',
