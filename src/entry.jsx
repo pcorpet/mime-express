@@ -23,10 +23,10 @@ function init() {
   metaViewport.setAttribute('name', 'viewport')
   metaViewport.setAttribute(
     'content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
-  head.appendChild(metaViewport)
+  head.appendChild(metaViewport);
 
-  Array.from(document.getElementsByTagName('title')).
-    forEach(titleElement => titleElement.innerText = 'Mime-Express')
+  [...document.getElementsByTagName('title')].
+    forEach(titleElement => titleElement.textContent = 'Mime-Express')
 
   if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant

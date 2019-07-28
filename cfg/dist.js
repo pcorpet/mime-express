@@ -5,21 +5,21 @@ const WebpackPwaManifest = require('webpack-pwa-manifest')
 const WorkboxPlugin = require('workbox-webpack-plugin')
 const _ = require('lodash')
 
-const baseConfig = require('./base')
+const {entry, ...baseConfig} = require('./base')
 
 var config = _.merge({
   cache: false,
   devtool: 'sourcemap',
   entry: [
     '@babel/polyfill',
-  ].concat(baseConfig.entry),
+  ].concat(entry),
   mode: 'production',
   output: {
     filename: 'app.[hash].js',
     path: path.join(__dirname, '/../dist'),
     publicPath: '/',
   },
-}, _.omit(baseConfig, 'entry'))
+}, baseConfig)
 
 config.plugins = [].concat(
   config.plugins.filter(p =>

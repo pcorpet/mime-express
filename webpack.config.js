@@ -8,7 +8,7 @@ var args = require('minimist')(process.argv.slice(2))
 var allowedEnvs = ['dev', 'dist', 'test']
 
 // Set the correct environment.
-if(args._.length > 0 && args._.indexOf('start') !== -1) {
+if (args._.length > 0 && args._.includes('start')) {
   process.env.REACT_WEBPACK_ENV = 'test'
 } else if (!process.env.REACT_WEBPACK_ENV) {
   process.env.REACT_WEBPACK_ENV = 'dev'
@@ -28,7 +28,7 @@ var configs = {
  * @return {String}
  */
 function getValidEnv(env) {
-  var isValid = env && env.length > 0 && allowedEnvs.indexOf(env) !== -1
+  var isValid = env && env.length > 0 && allowedEnvs.includes(env)
   return isValid ? env : 'dev'
 }
 
