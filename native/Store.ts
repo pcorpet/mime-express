@@ -8,21 +8,22 @@ const locales = {
       "the expression, it's their turn to mime the new one.",
   },
   fr: {
+    'Avoid crude expressions': 'Éviter les expressions osées',
     'Difficulty:': 'Difficulté\u00A0:',
     'Language:': 'Langue\u00A0:',
     'Laughters guaranteed!!': 'Fous rires garantis\u00A0!!',
     'Mime the expression:': 'Mimez l’expression\u00A0:',
     'Next': 'Suivant',
     'Rules of the game:': 'Règles du jeu\u00A0:',
+    'Settings': 'Paramètres',
+    'Show the definitions': 'Montrer les définitions',
     'Start': 'Commencer',
     'all expressions': 'toutes les expressions',
-    'avoid crude expressions': 'éviter les expressions osées',
     'common and less common': 'communes et un peu moins',
     'common expressions': 'expressions communes',
     'rules': "Vous devez mimer l'expression qui s’affiche à l'écran. Lorsqu'un joueur " +
       "découvre l'expression, il devra à son tour mimer une nouvelle expression.",
     'search definition →': 'chercher la définition →',
-    'show the definitions': 'montrer les définitions',
     'very common expressions': 'expressions très communes',
   },
 }
@@ -85,8 +86,6 @@ async function getSettings(): Promise<Settings> {
 }
 
 
-// TODO(pascal): Use in redux.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function setSettings(value: Settings): Promise<void> {
   try {
     await AsyncStorage.setItem('SETTINGS', JSON.stringify(value))
@@ -99,4 +98,5 @@ async function setSettings(value: Settings): Promise<void> {
 export {
   getSettings,
   getTranslator,
+  setSettings,
 }

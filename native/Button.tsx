@@ -4,6 +4,7 @@ import {Platform, Text, TouchableOpacity, TouchableNativeFeedback, View,
 
 
 interface ButtonProps {
+  onPress: () => void
   title: string
   style?: ViewStyleProp
 }

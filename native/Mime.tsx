@@ -1,6 +1,7 @@
 import React from 'react'
 import {BackHandler, Linking, StyleSheet, Text, View} from 'react-native'
 import Button from './Button'
+import {Expression} from './Data'
 import {Settings} from './Store'
 
 
@@ -42,16 +43,10 @@ const styles = StyleSheet.create({
 })
 
 
-interface Expression {
-  definition?: string
-  title: string
-  vulgaire?: boolean
-}
-
-
 interface MimeScreenProps {
   allExpressions: readonly Expression[]
   onBack?: () => boolean
+  onOpenSettings: () => void
   settings: Settings
   translate: (text: string) => string
   transitionDurationMillisec: number
@@ -107,17 +102,24 @@ export default class MimeScreen extends React.PureComponent<MimeScreenProps> {
   }
 
   public render(): React.ReactNode {
-    const {settings, transitionDurationMillisec, translate} = this.props
+    const {onOpenSettings, settings, transitionDurationMillisec, translate} = this.props
     const {expression, isFadingOut} = this.state
     const areDefinitionsShown = settings.areDefinitionsShown
     const fadingStyle = {
       opacity: isFadingOut ? 0 : 1,
       transition: (transitionDurationMillisec / 2) + 'ms',
     }
+    const settingsStyle = {
+      padding: 20,
+      position: 'absolute',
+      right: 10,
+      top: 30,
+    }
     return <View style={styles.container}>
-      {/* <SettingsIcon
+      {/* TODO(pascal): Replace by a SettingsIcon. */}
+      <Button
         style={settingsStyle}
-        onClick={this.openSettings} /> */}
+        onPress={onOpenSettings} title={translate('Settings')} />
       <Text style={styles.header}>{translate('Mime the expression:')}</Text>
       <View style={fadingStyle}>
         <Text style={styles.expression}>{expression.title}</Text>
