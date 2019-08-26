@@ -15,7 +15,6 @@ const locales = {
     'Mime the expression:': 'Mimez l’expression\u00A0:',
     'Next': 'Suivant',
     'Rules of the game:': 'Règles du jeu\u00A0:',
-    'Settings': 'Paramètres',
     'Show the definitions': 'Montrer les définitions',
     'Start': 'Commencer',
     'all expressions': 'toutes les expressions',

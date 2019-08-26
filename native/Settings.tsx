@@ -1,7 +1,7 @@
 import React from 'react'
 import {Picker, StyleSheet, Switch, Text, View} from 'react-native'
+import {Icon} from 'react-native-elements'
 
-import Button from './Button'
 import {datasets} from './Data'
 import {Settings} from './Store'
 
@@ -81,15 +81,13 @@ class SettingsScreen extends React.PureComponent<ScreenProps> {
     const {settings: {areDefinitionsShown, isVulgarAccepted, lang, minLevelAccepted},
       onClose, translate} = this.props
     const closeStyle = {
-      cursor: 'pointer',
       padding: 20,
       position: 'absolute',
       right: 10,
       top: 30,
     }
     return <View style={styles.container}>
-      {/* TODO(pascal): Replace by a CloseIcon. */}
-      <Button onPress={onClose} style={closeStyle} title="X" />
+      <Icon name="close" type="MaterialIcons" onPress={onClose} containerStyle={closeStyle} />
       <View style={{marginBottom: 50}}>
         <Text>{translate('Language:')}{' '}</Text>
         <Picker selectedValue={lang} onValueChange={this.handleChangeLang}>

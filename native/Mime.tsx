@@ -1,5 +1,6 @@
 import React from 'react'
 import {BackHandler, Linking, StyleSheet, Text, View} from 'react-native'
+import {Icon} from 'react-native-elements'
 import Button from './Button'
 import {Expression} from './Data'
 import {Settings} from './Store'
@@ -7,10 +8,9 @@ import {Settings} from './Store'
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255,255,255,.5)',
     color: '#1e5089',
     fontSize: 16,
-    opacity: .5,
   },
   container: {
     alignItems: 'center',
@@ -36,9 +36,16 @@ const styles = StyleSheet.create({
   header: {
     color: '#fff',
     fontSize: 16,
+    padding: 20,
   },
   link: {
     textAlign: 'center',
+  },
+  settings: {
+    padding: 20,
+    position: 'absolute',
+    right: 10,
+    top: 30,
   },
 })
 
@@ -109,17 +116,10 @@ export default class MimeScreen extends React.PureComponent<MimeScreenProps> {
       opacity: isFadingOut ? 0 : 1,
       transition: (transitionDurationMillisec / 2) + 'ms',
     }
-    const settingsStyle = {
-      padding: 20,
-      position: 'absolute',
-      right: 10,
-      top: 30,
-    }
     return <View style={styles.container}>
-      {/* TODO(pascal): Replace by a SettingsIcon. */}
-      <Button
-        style={settingsStyle}
-        onPress={onOpenSettings} title={translate('Settings')} />
+      <Icon
+        name="settings" type="MaterialIcons" onPress={onOpenSettings} color="#fff"
+        containerStyle={styles.settings} />
       <Text style={styles.header}>{translate('Mime the expression:')}</Text>
       <View style={fadingStyle}>
         <Text style={styles.expression}>{expression.title}</Text>
