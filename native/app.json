@@ -4,12 +4,13 @@
     "slug": "mime-express",
     "privacy": "public",
     "sdkVersion": "33.0.0",
+    "slug": "mime-express",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,7 +24,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "net.corpet.lascap.mimeexpress",
+      "permissions": [],
+      "versionCode": 2
+    },
     "ios": {
+      "bundleIdentifier": "net.corpet.lascap.mimeexpress",
       "supportsTablet": true
     }
   }
