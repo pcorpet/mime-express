@@ -24,3 +24,5 @@ services:
     volumes:
       - ./import/ttl_to_json.js:/work/ttl_to_json.js:ro
       - ./import/airtable_to_json.js:/work/airtable_to_json.js:ro
+      - ./import/airtable_to_json.js:/work/json_to_airtable.js:ro
+      - ./data:/work/data:ro
