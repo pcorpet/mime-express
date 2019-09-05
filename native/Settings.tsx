@@ -61,9 +61,8 @@ class SettingsScreen extends React.PureComponent<ScreenProps> {
     onUpdateSettings({lang})
   }
 
-  private handleChangeLevel = (value): void => {
+  private handleChangeLevel = (minLevelAccepted): void => {
     const {onUpdateSettings} = this.props
-    const minLevelAccepted = parseInt(value, 10)
     onUpdateSettings({minLevelAccepted})
   }
 
@@ -104,7 +103,7 @@ class SettingsScreen extends React.PureComponent<ScreenProps> {
 
       {datasets[lang].hasLevels ? <View style={{marginBottom: 50}}>
         <Text>{translate('Difficulty:')}{' '}</Text>
-        <Picker selectedValue={(minLevelAccepted || 1) + ''} onValueChange={this.handleChangeLevel}>
+        <Picker selectedValue={minLevelAccepted || 1} onValueChange={this.handleChangeLevel}>
           {difficultyOptions.map(({name, value}): React.ReactNode =>
             <Picker.Item key={value} value={value} label={translate(name)} />
           )}
