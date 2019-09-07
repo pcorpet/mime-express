@@ -3,20 +3,25 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {showSettings} from './store'
+import {getExpressions} from './data'
+import {nextExpression, showSettings} from './store'
 
 
 const stopPropagation = event => event.stopPropagation()
 
+const nextExpressionCreator = () => nextExpression
+const showSettingsCreator = () => showSettings
+
 
 class MimePageBase extends React.Component {
   static propTypes = {
-    allExpressions: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      vulgaire: PropTypes.bool,
-    })).isRequired,
     areDefinitionsShown: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired,
+    expression: PropTypes.shape({
+      definition: PropTypes.string,
+      title: PropTypes.string.isRequired,
+    }).isRequired,
+    onNextExpression: PropTypes.func.isRequired,
+    onShowSettings: PropTypes.func.isRequired,
     style: PropTypes.object,
     transitionDurationMillisec: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
@@ -31,35 +36,33 @@ class MimePageBase extends React.Component {
   }
 
   state = {
-    expression: {},
+    expression: this.props.expression,
     isFadingOut: false,
   }
 
-  componentDidMount() {
-    this.nextExpression()
+  componentDidUpdate({expression: prevExpression}) {
+    const {expression, transitionDurationMillisec} = this.props
+    if (expression !== prevExpression) {
+      this.setState({isFadingOut: true})
+      this.timeout = setTimeout(() => this.setState({
+        expression,
+        isFadingOut: false,
+      }), transitionDurationMillisec / 2)
+    }
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout)
   }
 
-  nextExpression = () => {
-    const {allExpressions, transitionDurationMillisec} = this.props
-    clearTimeout(this.timeout)
-    const nextExpression = allExpressions[Math.floor(Math.random() * allExpressions.length)]
-    this.setState({isFadingOut: true})
-    this.timeout = setTimeout(() => this.setState({
-      expression: nextExpression,
-      isFadingOut: false,
-    }), transitionDurationMillisec / 2)
-  }
-
-  openSettings = () => {
-    this.props.dispatch(showSettings)
+  nextExpression = (event) => {
+    stopPropagation(event)
+    this.props.onNextExpression()
   }
 
   render() {
-    const {areDefinitionsShown, transitionDurationMillisec, translate} = this.props
+    const {areDefinitionsShown, onNextExpression, onShowSettings, transitionDurationMillisec,
+      translate} = this.props
     const {expression, isFadingOut} = this.state
     const style = {
       alignItems: 'center',
@@ -111,10 +114,10 @@ class MimePageBase extends React.Component {
       right: 10,
       top: 10,
     }
-    return <div style={style} onClick={this.nextExpression}>
+    return <div style={style} onClick={onNextExpression}>
       <SettingsIcon
         style={settingsStyle}
-        onClick={this.openSettings} />
+        onClick={onShowSettings} />
       <header style={headerStyle}>
         {translate('Mime the expression:')}
       </header>
@@ -135,7 +138,18 @@ class MimePageBase extends React.Component {
     </div>
   }
 }
-const MimePage = connect()(MimePageBase)
+const MimePage = connect(({expressionIndex, settings, translate}) => {
+  const expressions = getExpressions(settings)
+  const numExpressions = expressions.length
+  return {
+    areDefinitionsShown: !!settings.areDefinitionsShown,
+    expression: expressions[((expressionIndex % numExpressions) + numExpressions) % numExpressions],
+    translate,
+  }
+}, {
+  onNextExpression: nextExpressionCreator,
+  onShowSettings: showSettingsCreator,
+})(MimePageBase)
 
 
 export {MimePage}

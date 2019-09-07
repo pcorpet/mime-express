@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import {connect, Provider} from 'react-redux'
 import {createStore} from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 import 'styles/app.css'
 
-import {getExpressions} from './data'
 import {IntroPage} from './intro'
 import {MimePage} from './mime'
 import {SettingsPage} from './settings'
@@ -15,12 +15,6 @@ import {reducer} from './store'
 class MainPageBase extends React.Component {
   static propTypes = {
     areSettingsShown: PropTypes.bool.isRequired,
-    settings: PropTypes.shape({
-      areDefinitionsShown: PropTypes.bool,
-      isVulgarAcepted: PropTypes.bool,
-      lang: PropTypes.string,
-      minLevelAccepted: PropTypes.number,
-    }).isRequired,
     translate: PropTypes.func.isRequired,
   }
 
@@ -33,7 +27,7 @@ class MainPageBase extends React.Component {
   }
 
   render() {
-    const {areSettingsShown, settings, translate} = this.props
+    const {areSettingsShown, translate} = this.props
     const {isIntroSeen} = this.state
     if (areSettingsShown) {
       return <SettingsPage />
@@ -41,18 +35,17 @@ class MainPageBase extends React.Component {
     if (!isIntroSeen) {
       return <IntroPage onSubmit={this.handleIntroSubmit} translate={translate} />
     }
-    return <MimePage
-      allExpressions={getExpressions(settings)} translate={translate}
-      areDefinitionsShown={!!settings.areDefinitionsShown} />
+    return <MimePage />
   }
 }
-const MainPage = connect(({areSettingsShown, settings, translate}) =>
-  ({areSettingsShown, settings, translate}))(MainPageBase)
+const MainPage = connect(({areSettingsShown, translate}) =>
+  ({areSettingsShown, translate}))(MainPageBase)
 
 
 class App extends React.Component {
   state = {
-    store: createStore(reducer),
+    store: createStore(
+      reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()),
   }
 
   render() {

@@ -56,6 +56,7 @@ const initialSettings = {
 
 const initialState = {
   areSettingsShown: false,
+  expressionIndex: 0,
   settings: initialSettings,
   translate: getTranslator(initialSettings.lang),
 }
@@ -76,6 +77,12 @@ function reducer(state = initialState, action) {
     Storage.setItem('SETTINGS', JSON.stringify(settings))
     return {...state, settings, translate: getTranslator(settings.lang)}
   }
+  if (action.type === 'NEXT_EXPRESSION') {
+    return {
+      ...state,
+      expressionIndex: state.expressionIndex + 1,
+    }
+  }
   return state
 }
 
@@ -90,5 +97,7 @@ const updateSettings = (settings) => ({
   type: 'UPDATE_SETTINGS',
 })
 
+const nextExpression = {type: 'NEXT_EXPRESSION'}
 
-export {hideSettings, reducer, showSettings, updateSettings}
+
+export {hideSettings, nextExpression, reducer, showSettings, updateSettings}
