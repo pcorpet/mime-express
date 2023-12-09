@@ -1,3 +1,9 @@
+# Build
+
+```sh
+docker-compose run --rm frontend npm run dist
+```
+
 # Deploy
 
 First create an Firebase auth token:
@@ -30,6 +36,8 @@ docker-compose run --rm -e AIRTABLE_API_KEY=<your key> import node airtable_to_j
 ```
 
 ## Other Languages
+
+Pulling from https://github.com/dice-group/LIdioms.
 
 ```sh
 docker-compose run --rm import node ttl_to_json.js latestDump/english.ttl > data/english.json

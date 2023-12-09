@@ -2,4 +2,10 @@ FROM node:current
 
 WORKDIR /work
 RUN yarn init -y && yarn add n3 airtable
-RUN curl https://datahub.ckan.io/dataset/5094f1ad-8034-4ae1-bcf9-74f62b68efc6/resource/9483cf3b-2ed9-4a7f-8d36-6b123f53fb46/download/latestlidioms.tar.gz -o lidioms.tar.gz && tar -xzf lidioms.tar.gz
+RUN mkdir latestDump && \
+    curl https://raw.githubusercontent.com/dice-group/LIdioms/master/de/german.ttl -o latestDump/german.ttl && \
+    curl https://raw.githubusercontent.com/dice-group/LIdioms/master/en/english.ttl -o latestDump/english.ttl && \
+    curl https://raw.githubusercontent.com/dice-group/LIdioms/master/it/italian.ttl -o latestDump/italian.ttl && \
+    curl https://raw.githubusercontent.com/dice-group/LIdioms/master/pt/portuguese.ttl -o latestDump/portuguese.ttl && \
+    curl https://raw.githubusercontent.com/dice-group/LIdioms/master/rus/russian.ttl -o latestDump/russian.ttl && \
+    curl https://raw.githubusercontent.com/dice-group/LIdioms/master/tr/tr.ttl -o latestDump/tr.ttl

@@ -9,13 +9,13 @@ const {entry, ...baseConfig} = require('./base')
 
 var config = _.merge({
   cache: false,
-  devtool: 'sourcemap',
+  devtool: 'source-map',
   entry: [
     '@babel/polyfill',
   ].concat(entry),
   mode: 'production',
   output: {
-    filename: 'app.[hash].js',
+    filename: 'app.[contenthash].js',
     path: path.join(__dirname, '/../dist'),
     publicPath: '/',
   },
@@ -34,6 +34,8 @@ config.plugins = [].concat(
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr/),
     // Embed the JavaScript in the index.html page.
     new HtmlWebpackPlugin({
+      title: 'Mime-Express',
+      template: 'src/index.ejs',
       minify: {
         collapseWhitespace: true,
         decodeEntities: true,
